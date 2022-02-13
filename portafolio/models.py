@@ -8,6 +8,8 @@ from wagtail.search import index
 from wagtail.core import blocks
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.documents.blocks import DocumentChooserBlock
 
 
 class PortafolioIndex(Page):
@@ -25,49 +27,74 @@ class PortafolioIndex(Page):
         related_name='+'
     )
 
-    employmentHistory = StreamField([
+    employ = StreamField([
         ('employ', blocks.StructBlock([
             ('jobTitle', blocks.CharBlock()),
             ('employer', blocks.CharBlock(required=False)),
             ('city', blocks.CharBlock(required=False)),
             ('description', blocks.RichTextBlock(required=False)),
             ('link', blocks.URLBlock(required=False)),
-            ('initDate', blocks.DateBlock(required=False)), 
+            ('initDate', blocks.DateBlock(required=False)),
             ('endDate', blocks.DateBlock(required=False)),
+            ('image', ImageChooserBlock(required=False)),
+            ('document', DocumentChooserBlock(required=False)),
         ])),
-        ('certification', blocks.StructBlock([
+    ], blank=True)
+
+    certifications = StreamField([
+        ('certifications', blocks.StructBlock([
             ('title', blocks.CharBlock()),
             ('institution', blocks.CharBlock(required=False)),
             ('description', blocks.RichTextBlock(required=False)),
             ('link', blocks.URLBlock(required=False)),
-            ('initDate', blocks.DateBlock(required=False)), 
+            ('initDate', blocks.DateBlock(required=False)),
             ('endDate', blocks.DateBlock(required=False)),
+            ('image', ImageChooserBlock(required=False)),
+            ('document', DocumentChooserBlock(required=False)),
         ])),
+    ], blank=True)
+
+    courses = StreamField([
         ('courses', blocks.StructBlock([
             ('title', blocks.CharBlock()),
             ('institution', blocks.CharBlock(required=False)),
             ('description', blocks.RichTextBlock(required=False)),
             ('link', blocks.URLBlock(required=False)),
-            ('initDate', blocks.DateBlock(required=False)), 
+            ('initDate', blocks.DateBlock(required=False)),
             ('endDate', blocks.DateBlock(required=False)),
+            ('image', ImageChooserBlock(required=False)),
+            ('document', DocumentChooserBlock(required=False)),
         ])),
-        ('extra', blocks.StructBlock([
+    ], blank=True)
+
+    extras = StreamField([
+        ('extras', blocks.StructBlock([
             ('title', blocks.CharBlock()),
             ('site', blocks.CharBlock(required=False)),
             ('description', blocks.RichTextBlock(required=False)),
             ('link', blocks.URLBlock(required=False)),
-            ('initDate', blocks.DateBlock(required=False)), 
+            ('initDate', blocks.DateBlock(required=False)),
             ('endDate', blocks.DateBlock(required=False)),
+            ('image', ImageChooserBlock(required=False)),
+            ('document', DocumentChooserBlock(required=False)),
         ])),
+    ], blank=True)
+
+    skills = StreamField([
         ('skills', blocks.StructBlock([
             ('title', blocks.CharBlock()),
             ('description', blocks.RichTextBlock(required=False)),
             ('link', blocks.URLBlock(required=False)),
         ])),
+    ], blank=True)
+
+    publications = StreamField([
         ('publications', blocks.StructBlock([
             ('title', blocks.CharBlock()),
             ('description', blocks.RichTextBlock(required=False)),
             ('link', blocks.URLBlock(required=False)),
+            ('image', ImageChooserBlock(required=False)),
+            ('document', DocumentChooserBlock(required=False)),
         ])),
     ], blank=True)
 
@@ -79,7 +106,12 @@ class PortafolioIndex(Page):
         FieldPanel('phone'),
         FieldPanel('summary', classname="full"),
         ImageChooserPanel('profile_image'),
-        StreamFieldPanel('employmentHistory')
+        StreamFieldPanel('employ'),
+        StreamFieldPanel('certifications'),
+        StreamFieldPanel('courses'),
+        StreamFieldPanel('extras'),
+        StreamFieldPanel('skills'),
+        StreamFieldPanel('publications')
     ]
 
     search_fields = Page.search_fields + [

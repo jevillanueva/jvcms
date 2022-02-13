@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% block body_class %}template-portafoliopage{% endblock %}
+
+
+{% block extra_babel %}
+{% include 'portafolio/employ.jsx' %}
+{% endblock %}
+
+
+{% block content %}
+{% image page.profile_image fill-150x150 format-webp-lossless as tmp_photo %}
+<Box sx={boxGrow}>
+    <br />
+    <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Avatar alt="{{tmp_photo.alt}}" src="{{ tmp_photo.url }}" sx={avatarSize} />
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Typography variant="h3" component="h3">{{ page.name|richtext }}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Typography variant="h5" component="h5">{{ page.jobTitle|richtext }}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Stack direction="row" spacing={2}>
+                <Button href="mailto:{{ page.email }}" startIcon={<Icon>mail</Icon>}> {{ page.email }}</Button>
+                <Button href="tel:{{ page.phone }}" startIcon={<Icon>phone</Icon>} color="secondary" >{{page.phone}}</Button>
+            </Stack>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Typography component="div">{{ page.summary|richtext }}</Typography>
+        </Grid>
+
+    </Grid>
+    <br />
+    {{ post.block_type }}
+    <br />
+    {% if page.employ|length > 0  %}
+    <Typography variant="h5" component="h5">Historial de Trabajo</Typography>
+    <br/>
+    <Grid container spacing={2} direction="row">
+        {% for post in page.employ %}
+        <Grid item>
+            {% image post.value.image format-webp-lossless as tmp_photo_employ %}
+            <EmployCard
+            image="{{tmp_photo_employ.url}}"
+            description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
+            jobTitle={"{{ post.value.jobTitle }}"}
+            employer={"{{ post.value.employer }}"}
+            city={"{{ post.value.city }}"}
+            link={"{{ post.value.link }}"}
+            initDate={"{% if post.value.initDate is not none  %}{{ post.value.initDate }}{% endif %}"}
+            endDate={"{% if post.value.endDate is not none  %}{{ post.value.endDate }}{% endif %}"}
+            document="{{post.value.document.url}}"
+            />
+        </Grid>
+        
+        {% endfor %}
+    </Grid>
+    {% endif %}
+    <br/>
+
+
+    {% for post in page.certifications %}
+    {{ post.block_type }}
+    {{ post }}
+    {% endfor %}
+    {% for post in page.courses %}
+    {{ post.block_type }}
+    {{ post }}
+    {% endfor %}
+    {% for post in page.extras %}
+    {{ post.block_type }}
+    {{ post }}
+    {% endfor %}
+    {% for post in page.skills %}
+    {{ post.block_type }}
+    {{ post }}
+    {% endfor %}
+    {% for post in page.publications %}
+    {{ post.block_type }}
+    {{ post }}
+    {% endfor %}
+    <div class="row center">
+        {{ page.date }}
+    </div>
+</Box>
+{% endblock %}
