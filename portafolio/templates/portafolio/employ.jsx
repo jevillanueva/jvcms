@@ -1,8 +1,8 @@
 function EmployCard(props) {
-  var maxWidth = { maxWidth: 350 }
+  var hover = {':hover': {boxShadow: 20,},}
   console.log(props.link )
     return (
-      <Card sx={maxWidth}>
+      <Card sx={hover}>
         {props.image === null || props.image === "" || props.image === undefined ? null : 
         <CardMedia
           component="img"

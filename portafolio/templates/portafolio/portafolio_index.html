@@ -41,9 +41,10 @@
     {% if page.employ|length > 0  %}
     <Typography variant="h5" component="h5">Historial de Trabajo</Typography>
     <br/>
-    <Grid container spacing={2} direction="row">
+        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}
+        >
         {% for post in page.employ %}
-        <Grid item>
+        <ImageListItem>
             {% image post.value.image format-webp-lossless as tmp_photo_employ %}
             <EmployCard
             image="{{tmp_photo_employ.url}}"
@@ -56,10 +57,9 @@
             endDate={"{% if post.value.endDate is not none  %}{{ post.value.endDate }}{% endif %}"}
             document="{{post.value.document.url}}"
             />
-        </Grid>
-        
+        </ImageListItem>
         {% endfor %}
-    </Grid>
+    </ImageList>
     {% endif %}
     <br/>
 
