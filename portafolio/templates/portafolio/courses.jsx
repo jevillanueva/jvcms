@@ -1,4 +1,4 @@
-function CertificationCard(props) {
+function CoursesCard(props) {
   var hover = {':hover': {boxShadow: 20,},}
     return (
       <Card sx={hover}>

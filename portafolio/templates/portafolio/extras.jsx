@@ -1,4 +1,4 @@
-function CertificationCard(props) {
+function ExtrasCard(props) {
   var hover = {':hover': {boxShadow: 20,},}
     return (
       <Card sx={hover}>
@@ -14,7 +14,7 @@ function CertificationCard(props) {
           <Typography gutterBottom variant="h5" component="div">
             {props.title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">{props.institution}</Typography>
+          <Typography variant="body2" color="text.secondary">{props.site}</Typography>
           <Typography variant="body2" color="text.secondary" component="div">{props.description}</Typography>
           <Typography variant="body2" color="text.secondary" component="div">{props.initDate === "" || props.initDate === null || props.initDate === undefined ? null: "Desde: "+props.initDate } </Typography>
           <Typography variant="body2" color="text.secondary" component="div">{props.endDate === "" || props.endDate === null || props.endDate === undefined ? null: "Hasta: "+props.endDate}  </Typography>

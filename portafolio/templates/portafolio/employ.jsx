@@ -8,7 +8,7 @@ function EmployCard(props) {
           component="img"
           height="140"
           image={props.image}
-          alt="green iguana"
+          alt="Image"
         />
         }
         <CardContent>

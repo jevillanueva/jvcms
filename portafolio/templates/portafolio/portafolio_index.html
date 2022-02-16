@@ -6,8 +6,12 @@
 
 
 {% block extra_babel %}
-{% include 'portafolio/certification.jsx' %}
 {% include 'portafolio/employ.jsx' %}
+{% include 'portafolio/certification.jsx' %}
+{% include 'portafolio/courses.jsx' %}
+{% include 'portafolio/extras.jsx' %}
+{% include 'portafolio/skills.jsx' %}
+{% include 'portafolio/publications.jsx' %}
 {% endblock %}
 
 
@@ -37,7 +41,7 @@
 
     </Grid>
     <br />
-    {{ post.block_type }}
+
     {% if page.employ|length > 0  %}
     <br />
     <Typography variant="h5" component="h5">Historial de Trabajo</Typography>
@@ -66,6 +70,7 @@
         {% endfor %}
     </ImageList>
     {% endif %}
+
     {% if page.certifications|length > 0  %}
     <br />
     <Typography variant="h5" component="h5">Certificaciones</Typography>
@@ -94,23 +99,108 @@
     </ImageList>
     {% endif %}
 
+    {% if page.courses|length > 0  %}
+    <br />
+    <Typography variant="h5" component="h5">Cursos</Typography>
+    <br/>
+        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
+        {% for post in page.courses %}
+        <Helmet>
+            {{post.value.rawImportScriptCSSAndMeta}}
+        </Helmet>
+        <ImageListItem>
+            {% image post.value.image format-webp-lossless as tmp_photo_employ %}
+            <CoursesCard
+            image="{{tmp_photo_employ.url}}"
+            description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
+            title={"{{ post.value.title }}"}
+            institution={"{{ post.value.institution }}"}
+            link={"{{ post.value.link }}"}
+            initDate={"{% if post.value.initDate is not none  %}{{ post.value.initDate }}{% endif %}"}
+            endDate={"{% if post.value.endDate is not none  %}{{ post.value.endDate }}{% endif %}"}
+            document="{{post.value.document.url}}"
+            custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
+            />
+        </ImageListItem>
+        {% endfor %}
+    </ImageList>
+    {% endif %}
 
-    {% for post in page.courses %}
-    {{ post.block_type }}
-    {{ post }}
-    {% endfor %}
-    {% for post in page.extras %}
-    {{ post.block_type }}
-    {{ post }}
-    {% endfor %}
-    {% for post in page.skills %}
-    {{ post.block_type }}
-    {{ post }}
-    {% endfor %}
-    {% for post in page.publications %}
-    {{ post.block_type }}
-    {{ post }}
-    {% endfor %}
+    {% if page.extras|length > 0  %}
+    <br />
+    <Typography variant="h5" component="h5">Extracurriculares</Typography>
+    <br/>
+        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
+        {% for post in page.extras %}
+        <Helmet>
+            {{post.value.rawImportScriptCSSAndMeta}}
+        </Helmet>
+        <ImageListItem>
+            {% image post.value.image format-webp-lossless as tmp_photo_employ %}
+            <ExtrasCard
+            image="{{tmp_photo_employ.url}}"
+            description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
+            title={"{{ post.value.title }}"}
+            site={"{{ post.value.site }}"}
+            link={"{{ post.value.link }}"}
+            initDate={"{% if post.value.initDate is not none  %}{{ post.value.initDate }}{% endif %}"}
+            endDate={"{% if post.value.endDate is not none  %}{{ post.value.endDate }}{% endif %}"}
+            document="{{post.value.document.url}}"
+            custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
+            />
+        </ImageListItem>
+        {% endfor %}
+    </ImageList>
+    {% endif %}
+    
+    {% if page.skills|length > 0  %}
+    <br />
+    <Typography variant="h5" component="h5">Habilidades</Typography>
+    <br/>
+        <ImageList variant="masonry"  gap={10} sx={paddingList} cols={columns}>
+        {% for post in page.skills %}
+        <Helmet>
+            {{post.value.rawImportScriptCSSAndMeta}}
+        </Helmet>
+        <ImageListItem>
+            <SkillsCard
+            title={"{{ post.value.title }}"}
+            description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
+            link={"{{ post.value.link }}"}
+            custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
+            />
+        </ImageListItem>
+        {% endfor %}
+    </ImageList>
+    {% endif %}
+
+    {% if page.publications|length > 0  %}
+    <br />
+    <Typography variant="h5" component="h5">Publicaciones</Typography>
+    <br/>
+        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
+        {% for post in page.publications %}
+        <Helmet>
+            {{post.value.rawImportScriptCSSAndMeta}}
+        </Helmet>
+        <ImageListItem>
+            {% image post.value.image format-webp-lossless as tmp_photo_employ %}
+            <PublicationsCard
+            title={"{{ post.value.title }}"}
+            description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
+            link={"{{ post.value.link }}"}
+            image="{{tmp_photo_employ.url}}"
+            document="{{post.value.document.url}}"
+            custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
+            />
+        </ImageListItem>
+        {% endfor %}
+    </ImageList>
+    {% endif %}
+
+
+    
+   
     <div >
         {{ page.date }}
     </div>
