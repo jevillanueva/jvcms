@@ -1,6 +1,5 @@
 function EmployCard(props) {
   var hover = {':hover': {boxShadow: 20,},}
-  console.log(props.link )
     return (
       <Card sx={hover}>
         {props.image === null || props.image === "" || props.image === undefined ? null : 

@@ -46,7 +46,7 @@
     <br />
     <Typography variant="h5" component="h5">Historial de Trabajo</Typography>
     <br/>
-        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}
+        <ImageList variant="quilted"  gap={8} sx={paddingList} cols={columns}
         >
         {% for post in page.employ %}
         <ImageListItem>
@@ -75,7 +75,7 @@
     <br />
     <Typography variant="h5" component="h5">Certificaciones</Typography>
     <br/>
-        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
+        <ImageList variant="quilted"  gap={8} sx={paddingList} cols={columns}>
         {% for post in page.certifications %}
         <Helmet>
             {{post.value.rawImportScriptCSSAndMeta}}
@@ -103,7 +103,7 @@
     <br />
     <Typography variant="h5" component="h5">Cursos</Typography>
     <br/>
-        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
+        <ImageList variant="quilted"  gap={8} sx={paddingList} cols={columns}>
         {% for post in page.courses %}
         <Helmet>
             {{post.value.rawImportScriptCSSAndMeta}}
@@ -130,7 +130,7 @@
     <br />
     <Typography variant="h5" component="h5">Extracurriculares</Typography>
     <br/>
-        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
+        <ImageList variant="quilted"  gap={8} sx={paddingList} cols={columns}>
         {% for post in page.extras %}
         <Helmet>
             {{post.value.rawImportScriptCSSAndMeta}}
@@ -157,7 +157,7 @@
     <br />
     <Typography variant="h5" component="h5">Habilidades</Typography>
     <br/>
-        <ImageList variant="masonry"  gap={10} sx={paddingList} cols={columns}>
+        <ImageList variant="quilted"  gap={8} sx={paddingList} >
         {% for post in page.skills %}
         <Helmet>
             {{post.value.rawImportScriptCSSAndMeta}}
@@ -178,7 +178,7 @@
     <br />
     <Typography variant="h5" component="h5">Publicaciones</Typography>
     <br/>
-        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
+        <ImageList variant="quilted"  gap={8} sx={paddingList} cols={columns}>
         {% for post in page.publications %}
         <Helmet>
             {{post.value.rawImportScriptCSSAndMeta}}
