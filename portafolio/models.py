@@ -12,6 +12,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.core.blocks import RawHTMLBlock
 
+
 class PortafolioIndex(Page):
     date = models.DateField("Post date")
     name = RichTextField(blank=True)
@@ -26,6 +27,18 @@ class PortafolioIndex(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    orderData = StreamField([
+        ('order', blocks.StructBlock([
+            ('block', blocks.ChoiceBlock(required=True, choices=[
+                ('employ', 'Employ'),
+                ('certifications', 'Certifications'),
+                ('courses', 'Courses'),
+                ('extras', 'Extras'),
+                ('skills', 'Skills'),
+                ('publications', 'Publications'),
+            ])),
+        ])),
+    ], blank=True)
 
     employ = StreamField([
         ('employ', blocks.StructBlock([
@@ -39,7 +52,8 @@ class PortafolioIndex(Page):
             ('image', ImageChooserBlock(required=False)),
             ('document', DocumentChooserBlock(required=False)),
             ('rawHTML', RawHTMLBlock(required=False)),
-            ('rawImportScriptCSSAndMeta', RawHTMLBlock(required=False, help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
+            ('rawImportScriptCSSAndMeta', RawHTMLBlock(required=False,
+             help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
         ])),
     ], blank=True)
 
@@ -54,7 +68,8 @@ class PortafolioIndex(Page):
             ('image', ImageChooserBlock(required=False)),
             ('document', DocumentChooserBlock(required=False)),
             ('rawHTML', RawHTMLBlock(required=False)),
-            ('rawImportScriptCSSAndMeta', RawHTMLBlock(required=False, help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
+            ('rawImportScriptCSSAndMeta', RawHTMLBlock(required=False,
+             help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
         ])),
     ], blank=True)
 
@@ -69,7 +84,8 @@ class PortafolioIndex(Page):
             ('image', ImageChooserBlock(required=False)),
             ('document', DocumentChooserBlock(required=False)),
             ('rawHTML', RawHTMLBlock(required=False)),
-            ('rawImportScriptCSSAndMeta', RawHTMLBlock(required=False, help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
+            ('rawImportScriptCSSAndMeta', RawHTMLBlock(required=False,
+             help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
         ])),
     ], blank=True)
 
@@ -84,7 +100,8 @@ class PortafolioIndex(Page):
             ('image', ImageChooserBlock(required=False)),
             ('document', DocumentChooserBlock(required=False)),
             ('rawHTML', RawHTMLBlock(required=False)),
-            ('rawImportScriptCSSAndMeta', RawHTMLBlock(required=False, help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
+            ('rawImportScriptCSSAndMeta', RawHTMLBlock(required=False,
+             help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
         ])),
     ], blank=True)
 
@@ -94,7 +111,8 @@ class PortafolioIndex(Page):
             ('description', blocks.RichTextBlock(required=False)),
             ('link', blocks.URLBlock(required=False)),
             ('rawHTML', RawHTMLBlock(required=False)),
-            ('rawImportScriptCSSAndMeta', RawHTMLBlock(required=False, help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
+            ('rawImportScriptCSSAndMeta', RawHTMLBlock(required=False,
+             help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
         ])),
     ], blank=True)
 
@@ -106,7 +124,8 @@ class PortafolioIndex(Page):
             ('image', ImageChooserBlock(required=False)),
             ('document', DocumentChooserBlock(required=False)),
             ('rawHTML', RawHTMLBlock(required=False)),
-            ('rawImportScriptCSSAndMeta', RawHTMLBlock(required=False, help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
+            ('rawImportScriptCSSAndMeta', RawHTMLBlock(required=False,
+             help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
         ])),
     ], blank=True)
 
@@ -118,6 +137,7 @@ class PortafolioIndex(Page):
         FieldPanel('phone'),
         FieldPanel('summary', classname="full"),
         ImageChooserPanel('profile_image'),
+        StreamFieldPanel('orderData'),
         StreamFieldPanel('employ'),
         StreamFieldPanel('certifications'),
         StreamFieldPanel('courses'),
