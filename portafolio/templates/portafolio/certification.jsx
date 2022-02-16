@@ -1,4 +1,4 @@
-function EmployCard(props) {
+function CertificationCard(props) {
   var hover = {':hover': {boxShadow: 20,},}
   console.log(props.link )
     return (
@@ -13,9 +13,9 @@ function EmployCard(props) {
         }
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {props.jobTitle}
+            {props.title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">{props.employer}</Typography>
+          <Typography variant="body2" color="text.secondary">{props.institution}</Typography>
           <Typography variant="body2" color="text.secondary">{props.city}</Typography>
           <Typography variant="body2" color="text.secondary" component="div">{props.description}</Typography>
           <Typography variant="body2" color="text.secondary" component="div">{props.initDate === "" || props.initDate === null || props.initDate === undefined ? null: "Desde: "+props.initDate } </Typography>
@@ -26,7 +26,7 @@ function EmployCard(props) {
         </CardContent>
         <CardActions>
         {props.link === "" || props.link === null || props.link === undefined ? null : <Button size="small" href={props.link} target="_blank">Ver más</Button>}
-        {props.document === "" || props.document === null || props.document === undefined ? null : <Button size="small" href={props.document} download>Documento</Button>}
+        {props.document === "" || props.document === null || props.document === undefined ? null : <Button size="small" href={props.document} download>Archivo</Button>}
         </CardActions>
       </Card>
     );
