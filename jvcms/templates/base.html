@@ -23,6 +23,7 @@
     <script src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@mui/material@latest/umd/material-ui.development.js"crossorigin="anonymous"></script>
     <script src="https://unpkg.com/babel-standalone@latest/babel.min.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/particles.js' %}"></script>
     <script type="module">
         import * as reactHelmet from 'https://cdn.skypack.dev/react-helmet';
         console.log(typeof(reactHelmet))
@@ -36,7 +37,8 @@
     {% endblock %}
 </head>
 
-<body class="{% block body_class %}{% endblock %}">
+<body class="{% block body_class %}{% endblock %}" >
+    
     <div id="root"></div>
     <script type="text/babel">
         const {
@@ -67,10 +69,10 @@
         const theme = createTheme({
             palette: {
                 primary: {
-                    main: '#556cd6',
+                    main: '#6667ab',
                 },
                 secondary: {
-                    main: '#19857b',
+                    main: '#ee5c6c',
                 },
                 error: {
                     main: colors.red.A400,
@@ -146,16 +148,22 @@
             const updateDimensions = () => {
                 setColumns(getColumns(window.innerWidth))
             }
+            const resizeParticles = () => {
+                setColumns(getColumns(window.innerWidth))
+            }
             useEffect(() => {
                 window.addEventListener("resize", updateDimensions);
+                window.addEventListener("resize", resizeParticles);
                 return () => window.removeEventListener("resize", updateDimensions);
             }, []);
             return (
-                <Container>
-                    {% block content %}{% endblock %}
-                <Copyright/>
-                
-                </Container>
+                <div id="particles-js">
+                    <canvas className="particles-js-canvas-el" />
+                    <Container>
+                        {% block content %}{% endblock %}
+                        <Copyright/>    
+                    </Container>
+                </div>
             );
         }
 
@@ -168,19 +176,120 @@
         );
 
         {% block extra_babel %}{% endblock %}
-
+        
+        // ParticlesJS Config.
+        particlesJS("particles-js", {
+            "particles": {
+            "number": {
+                "value": 80,
+                "density": {
+                "enable": true,
+                "value_area": 700
+                }
+            },
+            "color": {
+                "value": "#ffffff"
+            },
+            "shape": {
+                "type": "circle",
+                "stroke": {
+                "width": 0,
+                "color": "#000000"
+                },
+                "polygon": {
+                "nb_sides": 5
+                },
+            },
+            "opacity": {
+                "value": 0.5,
+                "random": false,
+                "anim": {
+                "enable": false,
+                "speed": 0.1,
+                "opacity_min": 0.1,
+                "sync": false
+                }
+            },
+            "size": {
+                "value": 3,
+                "random": true,
+                "anim": {
+                "enable": false,
+                "speed": 10,
+                "size_min": 0.1,
+                "sync": false
+                }
+            },
+            "line_linked": {
+                "enable": true,
+                "distance": 150,
+                "color": "#ffffff",
+                "opacity": 0.4,
+                "width": 1
+            },
+            "move": {
+                "enable": true,
+                "speed": 2,
+                "direction": "none",
+                "random": false,
+                "straight": false,
+                "out_mode": "out",
+                "bounce": false,
+                "attract": {
+                "enable": false,
+                "rotateX": 600,
+                "rotateY": 1200
+                }
+            }
+            },
+            "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": {
+                "enable": true,
+                "mode": "grab"
+                },
+                "onclick": {
+                "enable": true,
+                "mode": "push"
+                },
+                "resize": true
+            },
+            "modes": {
+                "grab": {
+                "distance": 140,
+                "line_linked": {
+                    "opacity": 1
+                }
+                },
+                "bubble": {
+                "distance": 400,
+                "size": 40,
+                "duration": 2,
+                "opacity": 8,
+                "speed": 3
+                },
+                "repulse": {
+                "distance": 200,
+                "duration": 0.4
+                },
+                "push": {
+                "particles_nb": 4
+                },
+                "remove": {
+                "particles_nb": 2
+                }
+            }
+            },
+            "retina_detect": true
+        });
     </script>
     {% wagtailuserbar %}
 
     {# Global javascript #}
     <!-- <script type="text/javascript" src="{% static 'portafolio/js/sample.js' %}"></script> -->
 
-    {% block extra_js %}{# Override this in templates to add extra javascript #}{% endblock %}
-    <!-- Compiled and minified CSS -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
-    <!-- Compiled and minified JavaScript -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
-    <!-- <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script> -->
+    {% block extra_js %}{% endblock %}
 </body>
 
 </html>
