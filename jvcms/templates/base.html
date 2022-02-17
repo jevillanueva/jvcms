@@ -23,11 +23,11 @@
     <script src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@mui/material@latest/umd/material-ui.development.js"crossorigin="anonymous"></script>
     <script src="https://unpkg.com/babel-standalone@latest/babel.min.js" crossorigin="anonymous"></script>
-    <script src="{% static 'js/particles.js' %}"></script>
     <script type="module">
         import * as reactHelmet from 'https://cdn.skypack.dev/react-helmet';
-        console.log(typeof(reactHelmet))
         window.reactHelmet = reactHelmet;
+        import Particles from 'https://cdn.skypack.dev/react-tsparticles';
+        window.Particles = Particles;
       </script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/jvcms.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
@@ -62,6 +62,7 @@
             CardActions,
             ImageList,
             ImageListItem,
+            Paper,
         } = MaterialUI;
         const { useState,useEffect } = React;
         const {Helmet } = reactHelmet;
@@ -131,6 +132,50 @@
         }
 
         function App() {
+            const particleParams = {
+                fpsLimit: 60,
+
+                interactivity: {
+                    detectsOn: "canvas",
+                    events: {
+                      onClick: { enable: true, mode: "repulse" },
+                      onHover: {
+                        enable: true,
+                        mode: "bubble",
+                        parallax: { enable: false, force: 2, smooth: 10 }
+                      },
+                      resize: true
+                    },
+                    modes: {
+                      bubble: {
+                        distance: 400,
+                        duration: 0.3,
+                        opacity: 1,
+                        size: 4,
+                        speed: 3
+                      },
+                      grab: { distance: 400, line_linked: { opacity: 0.5 } },
+                      push: { particles_nb: 4 },
+                      remove: { particles_nb: 2 },
+                      repulse: { distance: 200, duration: 0.4 }
+                    }
+                  },
+                
+                particles: {
+                  color: {
+                    value: "#ccd6e6"
+                  },
+                  links: {
+                    enable: true,
+                    color: "#ccd6e6",
+                    distance: 150
+                  },
+                  move: {
+                    enable: true
+                  }
+                }
+              };
+            
             const getColumns = (width) => {
                 if (width < breakpoints.sm) {
                     return 1
@@ -157,8 +202,8 @@
                 return () => window.removeEventListener("resize", updateDimensions);
             }, []);
             return (
-                <div id="particles-js">
-                    <canvas className="particles-js-canvas-el" />
+                <div className="App">
+                    <Particles className="particles" params={particleParams} />
                     <Container>
                         {% block content %}{% endblock %}
                         <Copyright/>    
@@ -176,113 +221,6 @@
         );
 
         {% block extra_babel %}{% endblock %}
-        
-        // ParticlesJS Config.
-        particlesJS("particles-js", {
-            "particles": {
-            "number": {
-                "value": 80,
-                "density": {
-                "enable": true,
-                "value_area": 700
-                }
-            },
-            "color": {
-                "value": "#ffffff"
-            },
-            "shape": {
-                "type": "circle",
-                "stroke": {
-                "width": 0,
-                "color": "#000000"
-                },
-                "polygon": {
-                "nb_sides": 5
-                },
-            },
-            "opacity": {
-                "value": 0.5,
-                "random": false,
-                "anim": {
-                "enable": false,
-                "speed": 0.1,
-                "opacity_min": 0.1,
-                "sync": false
-                }
-            },
-            "size": {
-                "value": 3,
-                "random": true,
-                "anim": {
-                "enable": false,
-                "speed": 10,
-                "size_min": 0.1,
-                "sync": false
-                }
-            },
-            "line_linked": {
-                "enable": true,
-                "distance": 150,
-                "color": "#ffffff",
-                "opacity": 0.4,
-                "width": 1
-            },
-            "move": {
-                "enable": true,
-                "speed": 2,
-                "direction": "none",
-                "random": false,
-                "straight": false,
-                "out_mode": "out",
-                "bounce": false,
-                "attract": {
-                "enable": false,
-                "rotateX": 600,
-                "rotateY": 1200
-                }
-            }
-            },
-            "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                "enable": true,
-                "mode": "grab"
-                },
-                "onclick": {
-                "enable": true,
-                "mode": "push"
-                },
-                "resize": true
-            },
-            "modes": {
-                "grab": {
-                "distance": 140,
-                "line_linked": {
-                    "opacity": 1
-                }
-                },
-                "bubble": {
-                "distance": 400,
-                "size": 40,
-                "duration": 2,
-                "opacity": 8,
-                "speed": 3
-                },
-                "repulse": {
-                "distance": 200,
-                "duration": 0.4
-                },
-                "push": {
-                "particles_nb": 4
-                },
-                "remove": {
-                "particles_nb": 2
-                }
-            }
-            },
-            "retina_detect": true
-        });
     </script>
     {% wagtailuserbar %}
 

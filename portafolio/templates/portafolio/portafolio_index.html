@@ -18,33 +18,32 @@
 {% block content %}
 {% image page.profile_image fill-150x150 format-webp-lossless as tmp_photo %}
 <Box sx={boxGrow}>
-    <br />
-    <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
+    <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" elevation={16}>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <Avatar alt="{{tmp_photo.alt}}" src="{{ tmp_photo.url }}" sx={avatarSize} />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            <Typography variant="h3" component="h3">{{ page.name|richtext }}</Typography>
+            <Typography variant="h3" component="h3" >{{ page.name|richtext }}</Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <Typography variant="h5" component="h5">{{ page.jobTitle|richtext }}</Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            <Stack direction="row" spacing={2}>
                 <Button href="mailto:{{ page.email }}" startIcon={<Icon>mail</Icon>}> {{ page.email }}</Button>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                 <Button href="tel:{{ page.phone }}" startIcon={<Icon>phone</Icon>} color="secondary" >{{page.phone}}</Button>
-            </Stack>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <Typography component="div">{{ page.summary|richtext }}</Typography>
         </Grid>
-
     </Grid>
     <br />
     {% for order in page.orderData %}
         {% if order.value.block == "employ"  %}
             {% if page.employ|length > 0  %}
             <br />
+            <Paper elevation={4} ><Typography variant="h5" component="h5">Historial de Trabajo</Typography></Paper>
             <Typography variant="h5" component="h5">Historial de Trabajo</Typography>
             <br/>
                 <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}

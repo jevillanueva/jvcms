@@ -1,12 +1,13 @@
-canvas{
-    position:inherit;
-    left:0;
-    top:0;
-  }
-#particles-js {
+.particles {
     position: absolute;
-    width: 100%;
-    height: auto; 
-    background: #ccd6e6;
+    height: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* z-index: -1; */
+  }
 
+.App {
+    background: #f4f7ff
 }
