@@ -1,7 +1,7 @@
 {% load static wagtailcore_tags wagtailuserbar %}
 
 <!DOCTYPE html>
-<html class="no-js" lang="es">
+<html class="no-js App" lang="es">
 
 <head>
     <meta charset="utf-8" />
@@ -28,6 +28,8 @@
         window.reactHelmet = reactHelmet;
         import Particles from 'https://cdn.skypack.dev/react-tsparticles';
         window.Particles = Particles;
+        import PropTypes from 'https://cdn.skypack.dev/prop-types';
+        window.PropTypes = PropTypes;
       </script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/jvcms.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
@@ -63,6 +65,12 @@
             ImageList,
             ImageListItem,
             Paper,
+            Toolbar,
+            AppBar,
+            Slide,
+            useScrollTrigger,
+            Tooltip,
+            IconButton,
         } = MaterialUI;
         const { useState,useEffect } = React;
         const {Helmet } = reactHelmet;
@@ -131,7 +139,29 @@
             );
         }
 
-        function App() {
+        function HideOnScroll(props) {
+            const { children, window } = props;
+            // Note that you normally won't need to set the window ref as useScrollTrigger
+            // will default to window.
+            // This is only being set here because the demo is in an iframe.
+            const trigger = useScrollTrigger({
+              target: window ? window() : undefined,
+            });
+          
+            return (
+              <Slide appear={false} direction="down" in={!trigger}>
+                {children}
+              </Slide>
+            );
+          }
+        
+        HideOnScroll.propTypes = {
+        children: PropTypes.element.isRequired,
+        window: PropTypes.func,
+        };
+
+        function App(props) {
+
             const particleParams = {
                 fps_limit: 60,
                 interactivity: {
@@ -234,13 +264,21 @@
                 window.addEventListener("resize", resizeParticles);
                 return () => window.removeEventListener("resize", updateDimensions);
             }, []);
+            var spacingAppBarNone = { my: 0 }; // Spacing App Bar and Content
+            var spacingAppBarFull = { my: 9 }; // Spacing App Bar and Content
+            var sxAppBar = { boxShadow: 'none'};
             return (
                 <div className="App">
+                    <HideOnScroll {...props}>
+                        <AppBar color="transparent" sx={sxAppBar}>
+                          <Toolbar disableGutters>
+                                {% block menu %}{% endblock %}
+                          </Toolbar>
+                        </AppBar>
+                      </HideOnScroll>
                     <Particles className="particles" params={particleParams} />
-                    <Container>
-                        {% block content %}{% endblock %}
-                        <Copyright/>    
-                    </Container>
+                    {% block content %}{% endblock %}
+                    <Copyright/>    
                 </div>
             );
         }

@@ -14,202 +14,217 @@
 {% include 'portafolio/publications.jsx' %}
 {% endblock %}
 
+{% block menu %}
+    {% with sx='{{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}' sx2='{{ flexGrow:  0 }}' sx3='{{ my: 2, mx:2, display: "block" }}' %}     
+    <Box sx={{sx}}></Box>
+        {% for post in page.get_children %}
+        <Box sx={{sx2}}>
+            <Button sx={{sx3}} href="{% pageurl post %}">{{ post.title }}</Button>
+        </Box>
+        {% endfor %}
+    {% endwith %}
+{% endblock %}
 
 {% block content %}
 {% image page.profile_image fill-150x150 format-webp-lossless as tmp_photo %}
-<Box sx={boxGrow}>
-    <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" elevation={16}>
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            <Avatar alt="{{tmp_photo.alt}}" src="{{ tmp_photo.url }}" sx={avatarSize} />
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            <Typography variant="h4" component="h4" >{{ page.name|richtext }}</Typography>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            <Typography variant="h5" component="h5">{{ page.jobTitle|richtext }}</Typography>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                <Button href="mailto:{{ page.email }}" startIcon={<Icon>mail</Icon>}> {{ page.email }}</Button>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                <Button href="tel:{{ page.phone }}" startIcon={<Icon>phone</Icon>} color="secondary" >{{page.phone}}</Button>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            <Typography component="div">{{ page.summary|richtext }}</Typography>
-        </Grid>
-    </Grid>
-    <br />
-    {% for order in page.orderData %}
-        {% if order.value.block == "employ"  %}
-            {% if page.employ|length > 0  %}
+<Box sx={spacingAppBarNone}>
+    <Container>
+        <br/>
+        <Box sx={boxGrow}>
+            <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" elevation={16}>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Avatar alt="{{tmp_photo.alt}}" src="{{ tmp_photo.url }}" sx={avatarSize} />
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Typography variant="h4" component="h4" >{{ page.name|richtext }}</Typography>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Typography variant="h5" component="h5">{{ page.jobTitle|richtext }}</Typography>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                        <Button href="mailto:{{ page.email }}" startIcon={<Icon>mail</Icon>}> {{ page.email }}</Button>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                        <Button href="tel:{{ page.phone }}" startIcon={<Icon>phone</Icon>} color="secondary" >{{page.phone}}</Button>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Typography component="div">{{ page.summary|richtext }}</Typography>
+                </Grid>
+            </Grid>
             <br />
-            <Typography variant="h5" component="h5">Historial de Trabajo</Typography>
-            <br/>
-                <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}
-                >
-                {% for post in page.employ %}
-                <ImageListItem>
-                    <Helmet>
-                        {{post.value.rawImportScriptCSSAndMeta}}
-                    </Helmet>
-                    {% image post.value.image format-webp-lossless as tmp_photo_employ %}
-                    <EmployCard
-                    image="{{tmp_photo_employ.url}}"
-                    description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
-                    jobTitle={"{{ post.value.jobTitle }}"}
-                    employer={"{{ post.value.employer }}"}
-                    city={"{{ post.value.city }}"}
-                    link={"{{ post.value.link }}"}
-                    initDate={"{% if post.value.initDate is not none  %}{{ post.value.initDate }}{% endif %}"}
-                    endDate={"{% if post.value.endDate is not none  %}{{ post.value.endDate }}{% endif %}"}
-                    document="{{post.value.document.url}}"
-                    custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
-                    />
-                </ImageListItem>
-                {% endfor %}
-            </ImageList>
-            {% endif %}
+            {% for order in page.orderData %}
+                {% if order.value.block == "employ"  %}
+                    {% if page.employ|length > 0  %}
+                    <br />
+                    <Typography variant="h5" component="h5">Historial de Trabajo</Typography>
+                    <br/>
+                        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}
+                        >
+                        {% for post in page.employ %}
+                        <ImageListItem>
+                            <Helmet>
+                                {{post.value.rawImportScriptCSSAndMeta}}
+                            </Helmet>
+                            {% image post.value.image format-webp-lossless as tmp_photo_employ %}
+                            <EmployCard
+                            image="{{tmp_photo_employ.url}}"
+                            description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
+                            jobTitle={"{{ post.value.jobTitle }}"}
+                            employer={"{{ post.value.employer }}"}
+                            city={"{{ post.value.city }}"}
+                            link={"{{ post.value.link }}"}
+                            initDate={"{% if post.value.initDate is not none  %}{{ post.value.initDate }}{% endif %}"}
+                            endDate={"{% if post.value.endDate is not none  %}{{ post.value.endDate }}{% endif %}"}
+                            document="{{post.value.document.url}}"
+                            custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
+                            />
+                        </ImageListItem>
+                        {% endfor %}
+                    </ImageList>
+                    {% endif %}
 
-        {% elif order.value.block == "certifications" %}
-            {% if page.certifications|length > 0  %}
-            <br />
-            <Typography variant="h5" component="h5">Certificaciones</Typography>
-            <br/>
-                <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
-                {% for post in page.certifications %}
-                <Helmet>
-                    {{post.value.rawImportScriptCSSAndMeta}}
-                </Helmet>
-                <ImageListItem>
-                    {% image post.value.image format-webp-lossless as tmp_photo_employ %}
-                    <CertificationCard
-                    image="{{tmp_photo_employ.url}}"
-                    description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
-                    title={"{{ post.value.title }}"}
-                    institution={"{{ post.value.institution }}"}
-                    city={"{{ post.value.city }}"}
-                    link={"{{ post.value.link }}"}
-                    initDate={"{% if post.value.initDate is not none  %}{{ post.value.initDate }}{% endif %}"}
-                    endDate={"{% if post.value.endDate is not none  %}{{ post.value.endDate }}{% endif %}"}
-                    document="{{post.value.document.url}}"
-                    custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
-                    />
-                </ImageListItem>
-                {% endfor %}
-            </ImageList>
-            {% endif %}
-        
-        {% elif order.value.block == "courses" %}
-            {% if page.courses|length > 0  %}
-            <br />
-            <Typography variant="h5" component="h5">Cursos</Typography>
-            <br/>
-                <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
-                {% for post in page.courses %}
-                <Helmet>
-                    {{post.value.rawImportScriptCSSAndMeta}}
-                </Helmet>
-                <ImageListItem>
-                    {% image post.value.image format-webp-lossless as tmp_photo_employ %}
-                    <CoursesCard
-                    image="{{tmp_photo_employ.url}}"
-                    description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
-                    title={"{{ post.value.title }}"}
-                    institution={"{{ post.value.institution }}"}
-                    link={"{{ post.value.link }}"}
-                    initDate={"{% if post.value.initDate is not none  %}{{ post.value.initDate }}{% endif %}"}
-                    endDate={"{% if post.value.endDate is not none  %}{{ post.value.endDate }}{% endif %}"}
-                    document="{{post.value.document.url}}"
-                    custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
-                    />
-                </ImageListItem>
-                {% endfor %}
-            </ImageList>
-            {% endif %}
-        
-        {% elif order.value.block == "extras" %}
-            {% if page.extras|length > 0  %}
-            <br />
-            <Typography variant="h5" component="h5">Extracurriculares</Typography>
-            <br/>
-                <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
-                {% for post in page.extras %}
-                <Helmet>
-                    {{post.value.rawImportScriptCSSAndMeta}}
-                </Helmet>
-                <ImageListItem>
-                    {% image post.value.image format-webp-lossless as tmp_photo_employ %}
-                    <ExtrasCard
-                    image="{{tmp_photo_employ.url}}"
-                    description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
-                    title={"{{ post.value.title }}"}
-                    site={"{{ post.value.site }}"}
-                    link={"{{ post.value.link }}"}
-                    initDate={"{% if post.value.initDate is not none  %}{{ post.value.initDate }}{% endif %}"}
-                    endDate={"{% if post.value.endDate is not none  %}{{ post.value.endDate }}{% endif %}"}
-                    document="{{post.value.document.url}}"
-                    custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
-                    />
-                </ImageListItem>
-                {% endfor %}
-            </ImageList>
-            {% endif %}
-        
-        {% elif order.value.block == "skills" %}
-            {% if page.skills|length > 0  %}
-            <br />
-            <Typography variant="h5" component="h5">Habilidades</Typography>
-            <br/>
-                <ImageList variant="quilted"  gap={8} sx={paddingList} cols={columns}>
-                {% for post in page.skills %}
-                <Helmet>
-                    {{post.value.rawImportScriptCSSAndMeta}}
-                </Helmet>
-                <ImageListItem>
-                    <SkillsCard
-                    title={"{{ post.value.title }}"}
-                    description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
-                    link={"{{ post.value.link }}"}
-                    custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
-                    />
-                </ImageListItem>
-                {% endfor %}
-            </ImageList>
-            {% endif %}
+                {% elif order.value.block == "certifications" %}
+                    {% if page.certifications|length > 0  %}
+                    <br />
+                    <Typography variant="h5" component="h5">Certificaciones</Typography>
+                    <br/>
+                        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
+                        {% for post in page.certifications %}
+                        <Helmet>
+                            {{post.value.rawImportScriptCSSAndMeta}}
+                        </Helmet>
+                        <ImageListItem>
+                            {% image post.value.image format-webp-lossless as tmp_photo_employ %}
+                            <CertificationCard
+                            image="{{tmp_photo_employ.url}}"
+                            description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
+                            title={"{{ post.value.title }}"}
+                            institution={"{{ post.value.institution }}"}
+                            city={"{{ post.value.city }}"}
+                            link={"{{ post.value.link }}"}
+                            initDate={"{% if post.value.initDate is not none  %}{{ post.value.initDate }}{% endif %}"}
+                            endDate={"{% if post.value.endDate is not none  %}{{ post.value.endDate }}{% endif %}"}
+                            document="{{post.value.document.url}}"
+                            custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
+                            />
+                        </ImageListItem>
+                        {% endfor %}
+                    </ImageList>
+                    {% endif %}
+                
+                {% elif order.value.block == "courses" %}
+                    {% if page.courses|length > 0  %}
+                    <br />
+                    <Typography variant="h5" component="h5">Cursos</Typography>
+                    <br/>
+                        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
+                        {% for post in page.courses %}
+                        <Helmet>
+                            {{post.value.rawImportScriptCSSAndMeta}}
+                        </Helmet>
+                        <ImageListItem>
+                            {% image post.value.image format-webp-lossless as tmp_photo_employ %}
+                            <CoursesCard
+                            image="{{tmp_photo_employ.url}}"
+                            description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
+                            title={"{{ post.value.title }}"}
+                            institution={"{{ post.value.institution }}"}
+                            link={"{{ post.value.link }}"}
+                            initDate={"{% if post.value.initDate is not none  %}{{ post.value.initDate }}{% endif %}"}
+                            endDate={"{% if post.value.endDate is not none  %}{{ post.value.endDate }}{% endif %}"}
+                            document="{{post.value.document.url}}"
+                            custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
+                            />
+                        </ImageListItem>
+                        {% endfor %}
+                    </ImageList>
+                    {% endif %}
+                
+                {% elif order.value.block == "extras" %}
+                    {% if page.extras|length > 0  %}
+                    <br />
+                    <Typography variant="h5" component="h5">Extracurriculares</Typography>
+                    <br/>
+                        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
+                        {% for post in page.extras %}
+                        <Helmet>
+                            {{post.value.rawImportScriptCSSAndMeta}}
+                        </Helmet>
+                        <ImageListItem>
+                            {% image post.value.image format-webp-lossless as tmp_photo_employ %}
+                            <ExtrasCard
+                            image="{{tmp_photo_employ.url}}"
+                            description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
+                            title={"{{ post.value.title }}"}
+                            site={"{{ post.value.site }}"}
+                            link={"{{ post.value.link }}"}
+                            initDate={"{% if post.value.initDate is not none  %}{{ post.value.initDate }}{% endif %}"}
+                            endDate={"{% if post.value.endDate is not none  %}{{ post.value.endDate }}{% endif %}"}
+                            document="{{post.value.document.url}}"
+                            custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
+                            />
+                        </ImageListItem>
+                        {% endfor %}
+                    </ImageList>
+                    {% endif %}
+                
+                {% elif order.value.block == "skills" %}
+                    {% if page.skills|length > 0  %}
+                    <br />
+                    <Typography variant="h5" component="h5">Habilidades</Typography>
+                    <br/>
+                        <ImageList variant="quilted"  gap={8} sx={paddingList} cols={columns}>
+                        {% for post in page.skills %}
+                        <Helmet>
+                            {{post.value.rawImportScriptCSSAndMeta}}
+                        </Helmet>
+                        <ImageListItem>
+                            <SkillsCard
+                            title={"{{ post.value.title }}"}
+                            description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
+                            link={"{{ post.value.link }}"}
+                            custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
+                            />
+                        </ImageListItem>
+                        {% endfor %}
+                    </ImageList>
+                    {% endif %}
 
-        {% elif order.value.block == "publications" %}
-            {% if page.publications|length > 0  %}
-            <br />
-            <Typography variant="h5" component="h5">Publicaciones</Typography>
-            <br/>
-                <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
-                {% for post in page.publications %}
-                <Helmet>
-                    {{post.value.rawImportScriptCSSAndMeta}}
-                </Helmet>
-                <ImageListItem>
-                    {% image post.value.image format-webp-lossless as tmp_photo_employ %}
-                    <PublicationsCard
-                    title={"{{ post.value.title }}"}
-                    description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
-                    link={"{{ post.value.link }}"}
-                    image="{{tmp_photo_employ.url}}"
-                    document="{{post.value.document.url}}"
-                    custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
-                    />
-                </ImageListItem>
-                {% endfor %}
-            </ImageList>
-            {% endif %}
-        {% else %}
-        <div>Block Not Found</div>
-        {% endif %}
-    {% endfor %}
+                {% elif order.value.block == "publications" %}
+                    {% if page.publications|length > 0  %}
+                    <br />
+                    <Typography variant="h5" component="h5">Publicaciones</Typography>
+                    <br/>
+                        <ImageList variant="masonry"  gap={8} sx={paddingList} cols={columns}>
+                        {% for post in page.publications %}
+                        <Helmet>
+                            {{post.value.rawImportScriptCSSAndMeta}}
+                        </Helmet>
+                        <ImageListItem>
+                            {% image post.value.image format-webp-lossless as tmp_photo_employ %}
+                            <PublicationsCard
+                            title={"{{ post.value.title }}"}
+                            description={ {% if post.value.description.source != ""  %} {{ post.value.description|richtext  }} {% else %} "" {% endif %} } 
+                            link={"{{ post.value.link }}"}
+                            image="{{tmp_photo_employ.url}}"
+                            document="{{post.value.document.url}}"
+                            custom={ {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} "" {% endif %} } 
+                            />
+                        </ImageListItem>
+                        {% endfor %}
+                    </ImageList>
+                    {% endif %}
+                {% else %}
+                <div>Block Not Found</div>
+                {% endif %}
+            {% endfor %}
 
-    
-   
-    <div >
-        {{ page.date }}
-    </div>
+            
+        
+            <div >
+                {{ page.date }}
+            </div>
+        </Box>
+    </Container>
 </Box>
 {% endblock %}
