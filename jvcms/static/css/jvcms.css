@@ -11,3 +11,11 @@
 .App {
     background: #f4f7ff
 }
+
+.mrkdwnImg {
+  max-width: 100%
+}
+
+pre {
+  white-space: pre-wrap;
+}

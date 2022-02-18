@@ -1,17 +1,36 @@
 {% extends "base.html" %}
 
 {% load wagtailcore_tags %}
-
+{% load wagtailmarkdown %}
+{% load customfilters %}
 {% block body_class %}template-blogpage{% endblock %}
 
+{% block extra_babel %}
+{% include 'blog/blog_full.jsx' %}
+{% endblock %}
+
 {% block content %}
-    <h1>{{ page.title }}</h1>
-    <p class="meta">{{ page.date }}</p>
-
-    <div class="intro">{{ page.intro }}</div>
-
-    {{ page.body|richtext }}
-
-    <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+<Box sx={spacingAppBarNone}>
+    <Container>
+        <br />
+        <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+        <Box sx={boxGrow}>
+           
+            {% with col='{1}' %}
+                <ImageList variant="default"  gap={8} sx={paddingList} cols={{col}} >
+                    <ImageListItem>
+                        <BlogFullCard
+                        title={"{{ page.title }}"}
+                        intro={"{{ page.intro }}"}
+                        body={ {% if page.body.source != ""  %} {{ page.body|richtext  }} {% else %} "" {% endif %} } 
+                        contentMarkdown={<div>{{ page.contentMarkdown|markdown|linebreaksbrclosed|hrclosed|imageclose|specialCharacters   }}</div>} 
+                        date={"{% if page.date is not none  %}{{ page.date }}{% endif %}"}
+                        />
+                    </ImageListItem>
+                </ImageList>
+            {% endwith %}
+        </Box>
+    </Container>
+</Box>
 
 {% endblock %}

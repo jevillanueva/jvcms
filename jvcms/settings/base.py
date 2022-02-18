@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    
+    'wagtailmarkdown',
 ]
 
 MIDDLEWARE = [
@@ -171,3 +171,12 @@ WAGTAILSEARCH_BACKENDS = {
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+WAGTAILMARKDOWN = {
+    "autodownload_fontawesome": True,
+    "allowed_tags": [],  # optional. a list of tags
+    "allowed_styles": [],  # optional. a list of styles
+    "allowed_attributes": {},  # optional. a dict with HTML tag as key and a list of attributes as value
+    "extensions": [],  # optioanl. a list of extensions
+    "extension_configs": {},  # optional. a dictionary with the extension name as key, and its configuration as value
+}
