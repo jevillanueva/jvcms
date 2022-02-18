@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
 {% load wagtailmarkdown %}
 {% load customfilters %}
 {% block body_class %}template-blogpage{% endblock %}
@@ -9,17 +10,34 @@
 {% include 'blog/blog_full.jsx' %}
 {% endblock %}
 
+{% block menu %}
+    {% with sx='{{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}' sx2='{{ flexGrow:  0 }}' sx3='{{ mr: 2}}' %}     
+            <IconButton
+                    sx={{sx3}}
+                    href="{{ page.get_parent.url }}"
+                    size="large"
+                    color="primary"
+                >
+                <Icon>arrow_back</Icon>
+            </IconButton>
+    {% endwith %}
+{% endblock %}
+        
+        
+
+
 {% block content %}
 <Box sx={spacingAppBarNone}>
     <Container>
         <br />
-        <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
         <Box sx={boxGrow}>
            
             {% with col='{1}' %}
                 <ImageList variant="default"  gap={8} sx={paddingList} cols={{col}} >
                     <ImageListItem>
+                        {% image page.imageBanner format-webp-lossless as tmp_photo_banner %}
                         <BlogFullCard
+                        imageBanner="{{tmp_photo_banner.url}}"
                         title={"{{ page.title }}"}
                         intro={"{{ page.intro }}"}
                         body={ {% if page.body.source != ""  %} {{ page.body|richtext  }} {% else %} "" {% endif %} } 

@@ -2,11 +2,11 @@ function BlogFullCard(props) {
     var hover = {':hover': {boxShadow: 20,}, }
       return (
         <Card sx={hover}>
-          {props.image === null || props.image === "" || props.image === undefined ? null : 
+          {props.imageBanner === null || props.imageBanner === "" || props.imageBanner === undefined ? null : 
           <CardMedia
+            height="300"
             component="img"
-            height="140"
-            image={props.image}
+            image={props.imageBanner}
             alt="Image"
           />
           }

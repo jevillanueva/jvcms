@@ -1,15 +1,18 @@
 function BlogCard(props) {
-    var hover = {':hover': {boxShadow: 20,},}
+    var hover = {':hover': {boxShadow: 20,}, display: 'flex'  }
+    var sxBoxContent = { display: 'flex', flexDirection: 'column' }
+    var sxCardMedia = { width: 151 }
       return (
         <Card sx={hover}>
-          {props.image === null || props.image === "" || props.image === undefined ? null : 
+          {props.imagePage === null || props.imagePage === "" || props.imagePage === undefined ? null : 
           <CardMedia
             component="img"
-            height="140"
-            image={props.image}
+            sx={sxCardMedia}
+            image={props.imagePage}
             alt="Image"
           />
           }
+          <Box sx={sxBoxContent}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {props.title}
@@ -18,8 +21,12 @@ function BlogCard(props) {
             <Typography variant="caption" color="text.secondary" component="div">{props.date}</Typography>
           </CardContent>
           <CardActions>
-          {props.link === "" || props.link === null || props.link === undefined ? null : <Button size="small" href={props.link} target="_blank">Ir</Button>}
+          {props.link === "" || props.link === null || props.link === undefined ? null : <Button size="small" href={props.link} >Ir</Button>}
           </CardActions>
+          </Box>
+
+          
+          
         </Card>
       );
     }

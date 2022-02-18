@@ -1,11 +1,23 @@
 {% extends "base.html" %}
 
 {% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
 
 {% block body_class %}template-blogindexpage{% endblock %}
 
 {% block extra_babel %}
 {% include 'blog/blog.jsx' %}
+{% endblock %}
+
+
+{% block menu %}
+    {% with sx='{{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}' sx2='{{ flexGrow:  0 }}' sx3='{{ my: 2, mx:2, display: "block" }}' %}     
+    <Box sx={{sx}}>
+        <Button sx={{sx3}} href="{{ page.get_parent.url }}">{{ page.get_parent.title }}</Button>
+    </Box>
+        <Box sx={{sx2}}>
+        </Box>
+    {% endwith %}
 {% endblock %}
 
 
@@ -19,7 +31,9 @@
                 <ImageList variant="default"  gap={8} sx={paddingList} cols={{col}}>
                     {% for post in page.get_children %}
                     <ImageListItem>
+                        {% image post.specific.imagePage format-webp-lossless as tmp_photo_page %}
                         <BlogCard
+                        imagePage="{{tmp_photo_page.url}}"
                         title={"{{ post.specific.title }}"}
                         intro={"{{ post.specific.intro }}"}
                         link={"{% pageurl post %}"}

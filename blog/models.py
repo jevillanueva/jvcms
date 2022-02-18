@@ -5,8 +5,7 @@ from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.search import index
 from wagtailmarkdown.fields import MarkdownField
-from wagtailmarkdown.blocks import MarkdownBlock
-
+from wagtail.images.edit_handlers import ImageChooserPanel
 class BlogIndexPage(Page):
     intro = RichTextField(blank=True)
 
@@ -43,6 +42,8 @@ class BlogPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         FieldPanel('intro'),
+        ImageChooserPanel('imagePage'),
+        ImageChooserPanel('imageBanner'),
         FieldPanel('body', classname="full"),
         FieldPanel('contentMarkdown', classname="full"),
     ]
