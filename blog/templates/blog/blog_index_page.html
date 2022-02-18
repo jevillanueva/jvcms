@@ -4,34 +4,35 @@
 
 {% block body_class %}template-blogindexpage{% endblock %}
 
+{% block extra_babel %}
+{% include 'blog/blog.jsx' %}
+{% endblock %}
+
+
 {% block content %}
-<nav class="white" role="navigation">
-    <div class="nav-wrapper container">
-        <a id="logo-container" href="#" class="brand-logo">Logo</a>
-        <ul class="right hide-on-med-and-down">
-            <li><a href="#">Navbar Link</a></li>
-        </ul>
+<Box sx={spacingAppBarNone}>
+    <Container>
+        <br />
+        <Box sx={boxGrow}>
+            <h1>{{ page.title }}</h1>
+            {% with col='{1}' %}
+                <ImageList variant="default"  gap={8} sx={paddingList} cols={{col}}>
+                    {% for post in page.get_children %}
+                    <ImageListItem>
+                        <BlogCard
+                        title={"{{ post.specific.title }}"}
+                        intro={"{{ post.specific.intro }}"}
+                        link={"{% pageurl post %}"}
+                        date={"{% if post.specific.date is not none  %}{{ post.specific.date }}{% endif %}"}
+                        />
+                    </ImageListItem>
+                    {% endfor %}
+                </ImageList>
+            {% endwith %}
+        </Box>
+    </Container>
+</Box>
 
-        <ul id="nav-mobile" class="sidenav">
-            <li><a href="#">Navbar Link</a></li>
-        </ul>
-        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-</nav>
-<div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 160 }'>
-    <div class="grid-item">...</div>
-    <div class="grid-item grid-item--width2">...</div>
-    <div class="grid-item">...</div>
-    ...
-</div>
-<h1>{{ page.title }}</h1>
 
-<div class="intro">{{ page.intro|richtext }}</div>
-
-{% for post in page.get_children %}
-<h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
-{{ post.specific.intro }}
-{{ post.specific.body|richtext }}
-{% endfor %}
 
 {% endblock %}
