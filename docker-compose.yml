@@ -3,7 +3,7 @@ services:
   app:
     image: jevillanueva/jvcms:latest
     ports:
-      - "8080:8000"
+      - "80:8000"
     volumes:
       - type: volume
         source: mymedia
