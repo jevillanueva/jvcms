@@ -4,8 +4,9 @@ FROM python:3.8.1-slim-buster
 # Add user that will be used in the container.
 RUN useradd wagtail
 
+ENV SSH_PORT 2222
 # Port used by this container to serve HTTP.
-EXPOSE 8000
+EXPOSE 8000 2222
 
 # Set environment variables.
 # 1. Force Python stdout and stderr streams to be unbuffered.
