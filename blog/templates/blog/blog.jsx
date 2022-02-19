@@ -1,7 +1,10 @@
 function BlogCard(props) {
-    var hover = {':hover': {boxShadow: 20,}, display: 'flex'  }
-    var sxBoxContent = { display: 'flex', flexDirection: 'column' }
-    var sxCardMedia = { width: 151 }
+    var hover = {':hover': {boxShadow: 20,}, display: { xs: 'block', sm:'block', md: 'flex', lg:'flex', xl:'flex'}  }
+    var sxBoxContent = { 
+                          display: { xs: 'block', sm:'block', md: 'flex', lg:'flex', xl:'flex'},
+                          flexDirection: { xs: 'row', sm: 'row', md: 'column', lg:'column', xl:'column'}
+                        }
+    var sxCardMedia = { width: {  md: 151, lg: 151,  xl:151 } }
       return (
         <Card sx={hover}>
           {props.imagePage === null || props.imagePage === "" || props.imagePage === undefined ? null : 
