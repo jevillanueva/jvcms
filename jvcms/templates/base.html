@@ -129,13 +129,17 @@
 
         function Copyright() {
             return (
-                <Typography variant="body2" color="text.secondary" align="center">
-                    {'Proyecto CMS React CDN disponible en '}
+                <Typography variant="body2" color="text.secondary" align="center" component="div">
+                   <ImageListItem align="center">
+                    <Typography variant="body2" color="text.secondary" >
+                      {'CMS con React desde CDN disponible en'} 
                     <Link color="inherit" href="https://github.com/jevillanueva/jvcms">
-                        Github
+                      Github
                     </Link>{' - '}
                     {new Date().getFullYear()}
                     {'.'}
+                    </Typography>
+                  </ImageListItem>
                 </Typography>
             );
         }
