@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
 
   build:
@@ -14,5 +17,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+        
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/${{ env.IMAGE_NAME }}:$(date +%s)
+      
+    - name: Docker Push
+      run: docker push ${{secrets.DOCKER_USER}}/${{ env.IMAGE_NAME }}
