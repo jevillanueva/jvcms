@@ -40,7 +40,7 @@
                         imageBanner="{{tmp_photo_banner.url}}"
                         title={"{{ page.title }}"}
                         intro={"{{ page.intro }}"}
-                        body={ {% if page.body.source != ""  %} {{ page.body|richtext  }} {% else %} "" {% endif %} } 
+                        body={<div>{{ page.body|richtext}}</div>} 
                         contentMarkdown={<div>{{ page.contentMarkdown|markdown|linebreaksbrclosed|hrclosed|imageclose|specialCharacters   }}</div>} 
                         date={"{% if page.date is not none  %}{{ page.date }}{% endif %}"}
                         />
