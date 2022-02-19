@@ -8,6 +8,7 @@ on:
 
 env:
   IMAGE_NAME: ${{ github.repository }}
+  TIME_PUSH: $(date +%s)
 
 jobs:
 
@@ -26,9 +27,9 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
         
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/${{ env.IMAGE_NAME }}:$(date +%s) --tag ${{secrets.DOCKER_USER}}/${{ env.IMAGE_NAME }}:latest
+      run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/${{ env.IMAGE_NAME }}:${{TIME_PUSH}} --tag ${{secrets.DOCKER_USER}}/${{ env.IMAGE_NAME }}:latest
       
     - name: Docker Push TimeStamp
-      run: docker push ${{secrets.DOCKER_USER}}/${{ env.IMAGE_NAME }}:$(date +%s)
+      run: docker push ${{secrets.DOCKER_USER}}/${{ env.IMAGE_NAME }}:${{TIME_PUSH}}
     - name: Docker Push Latest
       run: docker push ${{secrets.DOCKER_USER}}/${{ env.IMAGE_NAME }}:latest
