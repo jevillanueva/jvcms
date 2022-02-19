@@ -1,0 +1,16 @@
+version: '3.9' 
+services:
+  app:
+    image: jevillanueva/jvcms:latest
+    ports:
+      - "8080:8000"
+    volumes:
+      - type: volume
+        source: mymedia
+        target: /app/mymedia
+      - type: volume
+        source: mydb
+        target: /app/db
+volumes:
+  mymedia:
+  mydb:
