@@ -9,7 +9,7 @@ services:
     volumes:
       - type: volume
         source: mymedia
-        target: /app/mymedia
+        target: /app/media
       - type: volume
         source: mydb
         target: /app/db
