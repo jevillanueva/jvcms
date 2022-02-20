@@ -5,6 +5,7 @@ services:
     ports:
       - "80:8000"
       - "443:8000"
+      - "2222:2222" #For SSH access
     volumes:
       - type: volume
         source: mymedia

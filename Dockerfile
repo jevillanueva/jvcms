@@ -1,10 +1,25 @@
 # Use an official Python runtime based on Debian 10 "buster" as a parent image.
 FROM python:3.8.1-slim-buster
 
-# Add user that will be used in the container.
-RUN useradd wagtail
+# Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
+RUN apt-get update --yes --quiet
+RUN apt-get install --yes openssh-server
+# setup SSH
+RUN mkdir -p /home/LogFiles \
+     && echo "root:Docker!" | chpasswd \
+     && echo "cd /app" >> /etc/bash.bashrc 
 
+# Copy the sshd_config file to the /etc/ssh/ directory
+COPY sshd_config /etc/ssh/
+
+
+# Open port 2222 for SSH access
 ENV SSH_PORT 2222
+RUN sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
+
+# Add user that will be used in the container.
+# RUN useradd wagtail
+
 # Port used by this container to serve HTTP.
 EXPOSE 8000 2222
 
@@ -16,7 +31,7 @@ ENV PYTHONUNBUFFERED=1 \
     PORT=8000
 
 # Install system packages required by Wagtail and Django.
-RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
+RUN apt-get install --yes --quiet --no-install-recommends \
     build-essential \
     libpq-dev \
     libmariadbclient-dev \
@@ -38,13 +53,14 @@ WORKDIR /app
 # Set this directory to be owned by the "wagtail" user. This Wagtail project
 # uses SQLite, the folder needs to be owned by the user that
 # will be writing to the database file.
-RUN chown wagtail:wagtail /app
+# RUN chown wagtail:wagtail /app
 
 # Copy the source code of the project into the container.
-COPY --chown=wagtail:wagtail . .
+# COPY --chown=wagtail:wagtail . .
+COPY . .
 
 # Use user "wagtail" to run the build commands below and the server itself.
-USER wagtail
+# USER wagtail
 
 # Collect static files.
 RUN python manage.py collectstatic --noinput --clear
@@ -58,4 +74,4 @@ RUN python manage.py collectstatic --noinput --clear
 #   PRACTICE. The database should be migrated manually or using the release
 #   phase facilities of your hosting platform. This is used only so the
 #   Wagtail instance can be started with a simple "docker run" command.
-CMD set -xe; python manage.py migrate --noinput; gunicorn jvcms.wsgi:application
+CMD service ssh start; set -xe; python manage.py migrate --noinput; gunicorn jvcms.wsgi:application
