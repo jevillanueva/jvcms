@@ -95,6 +95,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.getenv("APP_DB_ROOT",os.path.join(BASE_DIR,'db', 'db.sqlite3')),
+        'OPTIONS': {
+            'timeout': 20,  # in seconds
+            # see also
+            # https://docs.python.org/3.7/library/sqlite3.html#sqlite3.connect
+        }
     }
 }
 
