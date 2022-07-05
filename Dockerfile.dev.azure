@@ -1,11 +1,27 @@
 # Use an official Python runtime based on Debian 10 "buster" as a parent image.
 FROM python:3.10.5-slim-buster
 
+# Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
+RUN apt-get update --yes --quiet
+RUN apt-get install --yes openssh-server
+# setup SSH
+RUN mkdir -p /home/LogFiles \
+     && echo "root:Docker!" | chpasswd \
+     && echo "cd /app" >> /etc/bash.bashrc 
+
+# Copy the sshd_config file to the /etc/ssh/ directory
+COPY sshd_config /etc/ssh/
+
+
+# Open port 2222 for SSH access
+ENV SSH_PORT 2222
+RUN sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
+
 # Add user that will be used in the container.
 # RUN useradd wagtail
 
 # Port used by this container to serve HTTP.
-EXPOSE 8000
+EXPOSE 8000 2222
 
 # Set environment variables.
 # 1. Force Python stdout and stderr streams to be unbuffered.
@@ -58,4 +74,24 @@ RUN python manage.py collectstatic --noinput --clear
 #   PRACTICE. The database should be migrated manually or using the release
 #   phase facilities of your hosting platform. This is used only so the
 #   Wagtail instance can be started with a simple "docker run" command.
-CMD set -xe; python manage.py migrate --noinput; gunicorn jvcms.wsgi:application
+CMD service ssh start; set -xe; python manage.py migrate --noinput; gunicorn jvcms.wsgi:application
+
+
+
+
+### !!!!!!!!!!!! ADDDFILE
+# This is ssh server systemwide configuration file.
+#
+# /etc/sshd_config
+# Port 			SSH_PORT
+# ListenAddress 		0.0.0.0
+# LoginGraceTime 		180
+# X11Forwarding 		yes
+# Ciphers aes128-cbc,3des-cbc,aes256-cbc,aes128-ctr,aes192-ctr,aes256-ctr
+# MACs hmac-sha1,hmac-sha1-96
+# StrictModes 		yes
+# SyslogFacility 		DAEMON
+# PasswordAuthentication 	yes
+# PermitEmptyPasswords 	no
+# PermitRootLogin 	yes
+# Subsystem sftp internal-sftp

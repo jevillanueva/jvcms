@@ -19,6 +19,12 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+APP_HOST_DB = os.getenv('APP_HOST_DB', 'localhost')
+APP_PORT_DB = os.getenv('APP_PORT_DB', '6033')
+APP_NAME_DB = os.getenv('APP_NAME_DB', 'app_db')
+APP_USER_DB = os.getenv('APP_USER_DB', 'db_user')
+APP_PASSWORD_DB = os.getenv('APP_PASSWORD_DB', 'db_user_pass')
+
 
 
 # Application definition
@@ -93,14 +99,13 @@ WSGI_APPLICATION = 'jvcms.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.getenv("APP_DB_ROOT",os.path.join(BASE_DIR,'db', 'db.sqlite3')),
-        'OPTIONS': {
-            'timeout': 20,  # in seconds
-            # see also
-            # https://docs.python.org/3.7/library/sqlite3.html#sqlite3.connect
-        }
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': APP_HOST_DB,
+        'PORT': APP_PORT_DB,
+        'NAME': APP_NAME_DB,
+        'USER': APP_USER_DB,
+        'PASSWORD': APP_PASSWORD_DB,
+    },
 }
 
 
