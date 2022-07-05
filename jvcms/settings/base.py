@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 APP_HOST_DB = os.getenv('APP_HOST_DB', 'localhost')
 APP_PORT_DB = os.getenv('APP_PORT_DB', '6033')
-APP_NAME_DB = os.getenv('APP_NAME_DB', 'app_db')
+APP_NAME_DB = os.getenv('APP_NAME_DB', 'app_db_2')
 APP_USER_DB = os.getenv('APP_USER_DB', 'db_user')
 APP_PASSWORD_DB = os.getenv('APP_PASSWORD_DB', 'db_user_pass')
 
@@ -60,15 +60,16 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-
-    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
+    "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'jvcms.urls'
