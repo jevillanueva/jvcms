@@ -15,21 +15,21 @@ APP_SECRET_KEY= "django-insecure-*sl%whcx#i*k+gqy+(^2c(b57v22##+ks4*$zyilfxpz^gn
 ## Para levantar todo el Stack de Produccion
 ```sh
 # Construir la imagen de la aplicacion
-docker-compose  -f .\docker-compose-prod.yml build app
+docker-compose  -f .\docker-compose.prod.yml build app
 # Lventar todos los componentes
-docker-compose  -f .\docker-compose-prod.yml up -d
+docker-compose  -f .\docker-compose.prod.yml up -d
 # Migrar los modelos a la base de datos
-docker-compose  -f .\docker-compose-prod.yml exec  app python manage.py migrate
+docker-compose  -f .\docker-compose.prod.yml exec  app python manage.py migrate
 # Para crear super user
-docker-compose  -f .\docker-compose-prod.yml exec  app python manage.py createsuperuser 
+docker-compose  -f .\docker-compose.prod.yml exec  app python manage.py createsuperuser 
 ```
 
 ## Administrar los componentes por separado
 ```sh
 # Levantar la base de datos
-docker-compose  -f .\docker-compose-prod.yml up -d database
+docker-compose  -f .\docker-compose.prod.yml up -d database
 # Levantar el webserver
-docker-compose  -f .\docker-compose-prod.yml up -d web
+docker-compose  -f .\docker-compose.prod.yml up -d web
 # Levantar la aplicación
-docker-compose  -f .\docker-compose-prod.yml up -d app
+docker-compose  -f .\docker-compose.prod.yml up -d app
 ```
