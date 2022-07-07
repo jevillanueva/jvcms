@@ -13,18 +13,25 @@ services:
       - traefik.http.routers.blog.tls=true
       - traefik.http.routers.blog.tls.certresolver=lets-encrypt
       - traefik.port=${TRAEFIK_APP_PORT}
+    networks:
+      - web
+      - internal
+    depends_on:
+      - app
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    labels:
-      - traefik.enable=false
+      labels:
+        - traefik.enable=false
     expose:
       - "8000"
     volumes:
       - app_media:/app/media
     env_file:
       - backend.env
+    networks:
+      - internal
     depends_on:
       - database
   database:
@@ -37,3 +44,10 @@ services:
       - "3306"
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - internal
+networks:
+  web:
+    external: true
+  internal:
+    external: false
