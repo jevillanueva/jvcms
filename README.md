@@ -33,3 +33,24 @@ docker-compose  -f .\docker-compose.prod.yml up -d web
 # Levantar la aplicación
 docker-compose  -f .\docker-compose.prod.yml up -d app
 ```
+
+## Para levantar con Traefik
+```sh
+# Construir la imagen de la aplicacion
+docker-compose  -f .\docker-compose.traefik.yml build app
+```
+```sh
+#Configurar las variables de entorno backend.env y database.env
+#Configurar un archivo .env con las variables de entorno del docker compose
+TRAEFIK_APP_DOMAIN = example.com
+TRAEFIK_APP_PORT = 80
+```
+
+```sh
+# Levantar la base de datos
+docker-compose  -f .\docker-compose.traefik.yml up -d database
+# Levantar el webserver
+docker-compose  -f .\docker-compose.traefik.yml up -d web
+# Levantar la aplicación
+docker-compose  -f .\docker-compose.traefik.yml up -d app
+```
