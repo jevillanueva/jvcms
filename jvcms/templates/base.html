@@ -43,6 +43,7 @@
     {% block extra_css %}
     {# Override this in templates to add extra stylesheets #}
     {% endblock %}
+    {% block extra_js_head %}{% endblock %}
 </head>
 
 <body class="{% block body_class %}{% endblock %}" >
@@ -106,7 +107,7 @@
         var boxGrow = { flexGrow: 1 }
         var paddingList = {'padding': '5px'}
 
-        
+        {% block extra_babel_script %}{% endblock %}
 
         function LightBulbIcon(props) {
             return (
@@ -177,7 +178,7 @@
 
             const particlesLoaded = (container) => {
             };
-            const particleParams = {
+            let particleParams = {
                 "autoPlay": true,
                 "background": {
                     "color": {
@@ -294,6 +295,11 @@
             var spacingAppBarNone = { my: 0 }; // Spacing App Bar and Content
             var spacingAppBarFull = { my: 9 }; // Spacing App Bar and Content
             var sxAppBar = { boxShadow: 'none'};
+
+
+            {% block particleParams %}{% endblock %}
+
+
             return (
                 <div className="App">
                     <HideOnScroll {...props}>
@@ -331,6 +337,7 @@
     {# Global javascript #}
     <!-- <script type="text/javascript" src="{% static 'portafolio/js/sample.js' %}"></script> -->
 
+    
     {% block extra_js %}{% endblock %}
 </body>
 

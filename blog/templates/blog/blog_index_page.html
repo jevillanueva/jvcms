@@ -50,3 +50,8 @@
 
 
 {% endblock %}
+{% block particleParams %}
+    {% for param in page.particle_param %}
+    {{param}}
+    {% endfor %}
+{% endblock %}

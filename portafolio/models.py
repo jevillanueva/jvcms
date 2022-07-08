@@ -128,6 +128,9 @@ class PortafolioIndex(Page):
              help_text="https://www.npmjs.com/package/react-helmet#reference-guide")),
         ])),
     ], blank=True)
+    particle_param = StreamField([
+            ('param', RawHTMLBlock(required=False)),
+    ], blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('name', classname="full"),
@@ -143,7 +146,8 @@ class PortafolioIndex(Page):
         StreamFieldPanel('courses'),
         StreamFieldPanel('extras'),
         StreamFieldPanel('skills'),
-        StreamFieldPanel('publications')
+        StreamFieldPanel('publications'),
+        StreamFieldPanel('particle_param'),
     ]
 
     search_fields = Page.search_fields + [

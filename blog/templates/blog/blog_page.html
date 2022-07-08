@@ -48,7 +48,46 @@
                 </ImageList>
             {% endwith %}
         </Box>
+        <Box sx={boxGrow}>
+           
+            {% with col='{1}' %}
+            {% for post in page.externalRaws %}
+            <ImageList variant="default"  gap={8} sx={paddingList} cols={{col}} >
+                <ImageListItem>
+                    <Helmet>
+                        {{post.value.rawImportScriptCSSAndMeta}}
+                    </Helmet>
+                    <Card>
+                        <CardContent>                          
+                          <Typography component="div">
+                            {% if post.value.rawHTML != ""  %} {{ post.value.rawHTML  }} {% else %} {""} {% endif %}
+                            
+                        </Typography>
+                        </CardContent>
+                      </Card>
+                </ImageListItem>
+            </ImageList>
+                {% endfor %}
+            {% endwith %}
+        </Box>
     </Container>
 </Box>
 
+{% endblock %}
+
+{% block extra_js_head %}
+    {% for post in page.externalRaws %}
+        {{post.value.rawScripts}}
+        {% endfor %}
+{% endblock %}
+
+{% block extra_babel_script %}
+    {% for post in page.externalRaws %}
+        {{post.value.rawScriptsBabel}}
+        {% endfor %}
+{% endblock %}
+{% block particleParams %}
+    {% for param in page.particle_param %}
+    {{param}}
+    {% endfor %}
 {% endblock %}
