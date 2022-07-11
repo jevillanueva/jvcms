@@ -17,18 +17,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: docker login
+    - 
+      name: Checkout
+      uses: actions/checkout@v2
+    -
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Docker Login
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
-        
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ env.IMAGE_NAME }}:${{env.IMAGE_TAG}} --tag ${{ env.IMAGE_NAME }}:latest
-    - name: Docker Push
-      run: docker push ${{ env.IMAGE_NAME }}:${{env.IMAGE_TAG}} 
-    - name: Docker Push Latest
-      run: docker push ${{ env.IMAGE_NAME }}:latest
+    -
+      name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: ${{ env.IMAGE_NAME }}:${{env.IMAGE_TAG}},${{ env.IMAGE_NAME }}:latest
